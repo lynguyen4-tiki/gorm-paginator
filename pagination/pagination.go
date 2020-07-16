@@ -28,7 +28,7 @@ type Paginator struct {
 }
 
 // Paging 分页
-func Paging(p *Param, result interface{}) *Paginator {
+func Paging(p *Param, result interface{}) (*Paginator, *gorm.DB) {
 	db := p.DB
 
 	if p.ShowSQL {
@@ -81,7 +81,7 @@ func Paging(p *Param, result interface{}) *Paginator {
 	} else {
 		paginator.NextPage = p.Page + 1
 	}
-	return &paginator
+	return &paginator, db
 }
 
 func countRecords(db *gorm.DB, anyType interface{}, done chan bool, count *int) {
